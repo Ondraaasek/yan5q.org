@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { Home, User, Github, MessageSquare, Mail, MessageCircle, MapPin } from 'lucide-svelte';
   
@@ -12,6 +13,12 @@
             activeLink = '';
         }, 300); // Duration of the scale effect
     }
+
+    // Example of using onMount to safely access DOM elements
+    onMount(() => {
+      // Any DOM-related code can go here
+      console.log('About page mounted');
+    });
 </script>
   
   <div class="layout">
@@ -53,42 +60,26 @@
     </aside>
   
     <main class="container">
-      <section class="intro fade-in">
-
+      <section class="intro">
+        <p class="location fade-in">
+          <MapPin size={14} />
+          Prague, Czech Republic
+        </p>
         <h1 class="fade-in">About Me</h1>
         <p class="intro-text fade-in">
-        /Work In Progress\
+          I'm a cybersecurity student passionate about technology and coding. 
+          Currently focusing on learning C# and exploring various aspects of software development.
         </p>
       </section>
   
       <section class="content fade-in">
-        <div class="section">
-          <h2>Education</h2>
-          <ul class="about-list">
-            <li>
-              <strong>SSPS</strong>
-              <p>Cybersecurity</p>
-            </li>
-            <!-- Add more education items as needed -->
-          </ul>
-        </div>
-  
-        <div class="section">
-          <h2>Interests</h2>
-          <ul class="about-list">
-            <li>Software Development</li>
-            <li>Cybersecurity</li>
-            <li>Open Source Projects</li>
-            <li>Learning New Technologies</li>
-          </ul>
-        </div>
-  
-        <div class="section">
-          <h2>Current Focus</h2>
-          <p class="focus-text">
-          /Work In Progress\
-        </p>
-        </div>
+        <h2 class="fade-in">My Interests</h2>
+        <ul class="interests-list fade-in">
+          <li class="fade-in">Software Development</li>
+          <li class="fade-in">Cybersecurity</li>
+          <li class="fade-in">Open Source Projects</li>
+          <li class="fade-in">Learning New Technologies</li>
+        </ul>
       </section>
   
       <footer>
