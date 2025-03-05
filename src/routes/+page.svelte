@@ -21,7 +21,8 @@
   }
 
   function toggleMobileMenu() {
-      mobileMenuOpen = !mobileMenuOpen;
+    console.log('Toggle menu:', !mobileMenuOpen);
+    mobileMenuOpen = !mobileMenuOpen;
   }
 </script>
 
@@ -200,7 +201,7 @@
                     <img src="https://cdn.worldvectorlogo.com/logos/svelte-1.svg" alt="Svelte logo" class="project-icon" />
                     <div class="project-text">
                         <span class="project-name">yan5q.org</span>
-                        <span class="project-description">my personal site written in Svelte, hosted on a ThinkPad in my house because why not</span>
+                        <span class="project-description">my personal site</span>
                     </div>
                 </button>
             </div>
@@ -461,8 +462,8 @@
   }
   
   .project:hover {
-    transform: scale(1.00);
-    background-color: #3b3b3b;
+    transform: translateY(-2.15px);
+    /*background-color: #3b3b3b;*/
   }
 
   .project:active {
@@ -531,17 +532,36 @@
     }
 
     .mobile-header {
-      display: flex;
+      display: flex !important;
     }
 
     .mobile-nav {
-      display: block;
+      height: auto;
+      max-height: calc(100vh - 60px);
+      overflow-y: auto;
     }
 
     .container {
       margin-left: 0;
       padding: 4rem 1rem;
-      padding-top: 80px; /* Add extra padding for the mobile header */
+      padding-top: 80px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .tech-stack {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .projects-list {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .tech-item, .project-item {
+      min-width: 0;
+      width: 100%;
     }
 
     h1 {
@@ -551,20 +571,16 @@
     .intro-text {
       font-size: 1rem;
     }
-    
-    .tech-stack {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .projects-list {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
+
+    .mobile-nav-links {
+      padding: 0.5rem;
+      background-color: rgba(23, 23, 23, 0.95);
     }
   }
   
   @media (max-width: 480px) {
-    .tech-stack, .projects-list {
-      grid-template-columns: repeat(2,1fr);
+    .tech-stack {
+      grid-template-columns: repeat(2, 1fr);
       gap: 0.75rem;
     }
   }
@@ -667,13 +683,17 @@
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     height: 60px;
-    background-color: #171717;
-    border-bottom: 1px solid #262626;
+    background-color: rgba(23, 23, 23, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(38, 38, 38, 0.5);
     padding: 0 1rem;
     z-index: 100;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
   }
 
   .mobile-profile {
@@ -701,21 +721,24 @@
   }
 
   .mobile-nav {
-    display: none;
     position: fixed;
     top: 60px;
     left: 0;
     right: 0;
-    background-color: #171717;
+    background-color: rgba(23, 23, 23, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid #262626;
     z-index: 99;
     padding: 1rem;
-    transform: translateY(-100%);
+    transform: translateY(-150%);
     transition: transform 0.3s ease;
+    visibility: hidden;
   }
 
   .mobile-nav-open {
     transform: translateY(0);
+    visibility: visible;
   }
 
   .mobile-nav-links {
@@ -741,8 +764,7 @@
   }
 
   .project-item:hover {
-    transform: scale(1.00);
-    background-color: #3b3b3b;
+    transform: translateY(-2.15px);
   }
 
   .project-item:active {
