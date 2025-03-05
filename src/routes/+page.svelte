@@ -1,24 +1,73 @@
 <script>
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
-  import { Home, User, Github, MessageSquare, Mail, MessageCircle, MapPin } from 'lucide-svelte';
+  import { Home, User, Github, MessageSquare, Mail, MessageCircle, MapPin, Menu } from 'lucide-svelte';
 
   $: currentPath = $page.url.pathname;
 
   let activeLink = '';
+  let mobileMenuOpen = false;
 
   function handleClick(link) {
       activeLink = link;
       setTimeout(() => {
           activeLink = '';
       }, 300); // Duration of the scale effect
+      
+      // Close mobile menu when a link is clicked
+      if (mobileMenuOpen) {
+          mobileMenuOpen = false;
+      }
+  }
+
+  function toggleMobileMenu() {
+      mobileMenuOpen = !mobileMenuOpen;
   }
 </script>
 
 <div class="layout">
+  <div class="mobile-header">
+    <div class="mobile-profile">
+      <img src="topographic-textures.jpg" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid #fff;">
+      <span class="mobile-name">yan5q</span>
+    </div>
+    <button class="menu-toggle" on:click={toggleMobileMenu}>
+      <Menu size={24} />
+    </button>
+  </div>
+
+  <div class="mobile-nav" class:mobile-nav-open={mobileMenuOpen}>
+    <nav class="mobile-nav-links">
+      <a href="/" class="nav-link" class:active={currentPath === '/'} on:click={() => handleClick('home')}>
+        <Home size={16} />
+        <span>Home</span>
+      </a>
+      <a href="/about" class="nav-link" class:active={currentPath === '/about'} on:click={() => handleClick('about')}>
+        <User size={16} />
+        <span>About</span>
+      </a>
+      <a href="https://github.com/Ondraaasek" class="nav-link" on:click={() => handleClick('github')}>
+        <Github size={16} />
+        <span>Github</span>
+      </a>
+      <a href="https://discord.com/users/yan5q" class="nav-link" on:click={() => handleClick('discord')}>
+        <MessageSquare size={16} />
+        <span>Discord</span>
+      </a>
+      <a href="mailto:yan5q@yan5q.org" class="nav-link" on:click={() => handleClick('email')}>
+        <Mail size={16} />
+        <span>Email</span>
+      </a>
+      <a href="https://matrix.to/#/@yan5q:matrix.org" class="nav-link" on:click={() => handleClick('matrix')}>
+        <MessageCircle size={16} />
+        <span>Matrix</span>
+      </a>
+    </nav>
+  </div>
+
   <aside class="sidebar"> 
     <div class="profile">
-      <img src="https://motionbgs.com/media/3335/topographic-textures.jpg" alt="Topographic pattern avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+      <img src="topographic-textures.jpg" alt="u arent supposed to see this text, if u see it, the host is probably down " style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
       <div class="profile-info">
         <h4 class="profile-name">yan5q</h4>
         <p class="profile-title">Student & Developer</p>
@@ -62,7 +111,7 @@
       <h1 class="fade-in">Hey, I'm yan5q</h1>
       <p class="intro-text fade-in">
         I'm a cybersecurity student from Czech Republic, who likes learning new stuff, 
-        coding, traveling, I'm currently learning C#.
+        coding, traveling, I'm currently learning C#, want to learn Rust, and my main focus is front-end development.
       </p>
     </section>
 
@@ -70,67 +119,119 @@
       <div class="section">
         <h2>My technologies</h2>
         <div class="tech-stack">
-          <span class="tech-item">
+          <button class="tech-item button-csharp" class:active-link={activeLink === 'csharp'} on:click={() => handleClick('csharp')}>
             <img src="https://cdn.worldvectorlogo.com/logos/c--4.svg" alt="C# logo" class="tech-icon" />
-            C#
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">C#</span>
+              <span class="tech-description">Java but MS</span>
+            </div>
+          </button>
+          <button class="tech-item button-svelte" class:active-link={activeLink === 'svelte'} on:click={() => handleClick('svelte')}>
             <img src="https://cdn.worldvectorlogo.com/logos/svelte-1.svg" alt="Svelte logo" class="tech-icon" />
-            Svelte
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">Svelte</span>
+              <span class="tech-description">UI framework</span>
+            </div>
+          </button>
+          <button class="tech-item button-html" class:active-link={activeLink === 'html'} on:click={() => handleClick('html')}>
             <img src="https://cdn.worldvectorlogo.com/logos/html-1.svg" alt="HTML logo" class="tech-icon" />
-            HTML
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">HTML</span>
+              <span class="tech-description">Markup lang</span>
+            </div>
+          </button>
+          <button class="tech-item button-css" class:active-link={activeLink === 'css'} on:click={() => handleClick('css')}>
             <img src="https://cdn.worldvectorlogo.com/logos/css-3.svg" alt="CSS logo" class="tech-icon" />
-            CSS
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">CSS</span>
+              <span class="tech-description">Just CSS</span>
+            </div>
+          </button>
+          <button class="tech-item button-js" class:active-link={activeLink === 'javascript'} on:click={() => handleClick('javascript')}>
             <img src="https://cdn.worldvectorlogo.com/logos/logo-javascript.svg" alt="JavaScript logo" class="tech-icon" />
-            JavaScript
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">JavaScript</span>
+              <span class="tech-description">Scripting lang</span>
+            </div>
+          </button>
+          <button class="tech-item button-json" class:active-link={activeLink === 'json'} on:click={() => handleClick('json')}>
             <img src="https://cdn.worldvectorlogo.com/logos/json.svg" alt="JSON logo" class="tech-icon" />
-            JSON
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">JSON</span>
+              <span class="tech-description">Data format</span>
+            </div>
+          </button>
+          <button class="tech-item button-python" class:active-link={activeLink === 'python'} on:click={() => handleClick('python')}>
             <img src="https://cdn.worldvectorlogo.com/logos/python-5.svg" alt="Python logo" class="tech-icon" />
-            Python
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">Python</span>
+              <span class="tech-description">Basic lang</span>
+            </div>
+          </button>
+          <button class="tech-item button-swift" class:active-link={activeLink === 'swift'} on:click={() => handleClick('swift')}>
             <img src="https://cdn.worldvectorlogo.com/logos/swift-15.svg" alt="Swift logo" class="tech-icon" />
-            Swift
-          </span>
-          <span class="tech-item">
-            <img src="https://cdn.worldvectorlogo.com/logos/markdown.svg" alt="Markdown logo" class="tech-icon" />
-            Markdown
-          </span>
-          <span class="tech-item">
+            <div class="tech-text">
+              <span class="tech-name">Swift</span>
+              <span class="tech-description">Apple stuff</span>
+            </div>
+          </button>
+          <button class="tech-item button-git" class:active-link={activeLink === 'git'} on:click={() => handleClick('git')}>
             <img src="https://cdn.worldvectorlogo.com/logos/git-icon.svg" alt="Git logo" class="tech-icon" />
-            Git
-          </span>
-          <span class="tech-item">
-            <img src="https://cdn.worldvectorlogo.com/logos/visual-studio-code-1.svg" alt="VS Code logo" class="tech-icon" />
-            VS Code
-          </span>
+            <div class="tech-text">
+              <span class="tech-name">Git</span>
+              <span class="tech-description">Version control</span>
+            </div>
+          </button>
+          <button class="tech-item button-cursor" class:active-link={activeLink === 'vscode'} on:click={() => handleClick('vscode')}>
+            <img src="https://paulstamatiou.com/_next/image?url=%2Fgear%2Fcursor-app-icon.png&w=3840&q=75" alt="Cursor logo" class="tech-icon" />
+            <div class="tech-text">
+              <span class="tech-name">Cursor</span>
+              <span class="tech-description">IDE w/ AI</span>
+            </div>
+          </button>
         </div>
       </div>
       
       <div class="section">
         <h2>My projects</h2>
-        <ul class="projects-list">
-          <li><strong>yan5q.org</strong> - my personal site (Svelte, CSS, JavaScript)</li>
-          <li><strong>AutoCertificate</strong> - for preparation courses for applicants (python)</li>
-          <li><strong>SSPSliminal</strong> - unfinished liminal game (Unity)</li>
-        </ul>
+        <div class="projects-list">
+            <div class="project-wrapper">
+                <button class="project-item button-svelte">
+                    <img src="https://cdn.worldvectorlogo.com/logos/svelte-1.svg" alt="Svelte logo" class="project-icon" />
+                    <div class="project-text">
+                        <span class="project-name">yan5q.org</span>
+                        <span class="project-description">my personal site written in Svelte, hosted on a ThinkPad in my house because why not</span>
+                    </div>
+                </button>
+            </div>
+            <div class="project-wrapper">
+                <button class="project-item button-python">
+                    <img src="https://cdn.worldvectorlogo.com/logos/python-5.svg" alt="Python logo" class="project-icon" />
+                    <div class="project-text">
+                        <span class="project-name">AutoCertificate</span>
+                        <span class="project-description">preparation courses</span>
+                    </div>
+                </button>
+            </div>
+            <div class="project-wrapper">
+                <button class="project-item">
+                    <img src="https://cdn.worldvectorlogo.com/logos/unity-69.svg" alt="Unity logo" class="project-icon" />
+                    <div class="project-text">
+                        <span class="project-name">SSPSliminal</span>
+                        <span class="project-description">liminal game</span>
+                    </div>
+                </button>
+            </div>
+        </div>
       </div>
     </section>
 
     <footer>
       <hr>
-      <h3>yan5q</h3>
-      <p>Student and Developer - 2024</p>
+      <div class="footer-content">
+        <h3>yan5q </h3>
+        <p>Student and Developer • 2024 <span class="version-tag" style="float: right; background-color: #222222; padding-left:0.2rem; padding-right:0.2rem; border-radius: 5px;"><code>release version 2.2</code></span></p>
+      </div>
     </footer>
   </main>
 </div>
@@ -215,10 +316,10 @@
   .container {
     flex: 1;
     max-width: 640px;
-    padding: 6rem 1.5rem;
+    padding: 4rem 1.5rem;
     margin: 0 auto;
-    margin-left: calc(16rem + 4rem); /* sidebar width + some spacing */
-  }
+     margin-left: calc(16rem + 4rem); /*sidebar width + some spacing */
+}
 
   .location {
     color: #94a3b8;
@@ -259,42 +360,157 @@
   }
 
   .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
+    align-items: center;
   }
 
   .tech-item {
     background-color: #262626;
     color: #e2e8f0;
-    padding: 0.25rem 0.75rem;
+    padding: 0.25rem;
     border-radius: 0.375rem;
-    font-size: 0.875rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
-    gap: 0.375rem;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    min-width: 170px;
+    height: 50px;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    /*outline: 3px;
+    outline-color: #ffffff;
+    outline-width: 3px;*/
+  }
+
+  .tech-item:hover {
+    transform: translateY(-2.15px);
+    /*background-color: #3b3b3b;*/
+  }
+
+  .tech-item:active {
+    transform: scale(0.9);
   }
 
   .tech-icon {
-    width: 14px;
-    height: 14px;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
   }
-  .projects-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+
+  .tech-text {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
   }
 
-  .projects-list li {
+  .tech-name {
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+
+  .tech-description {
+    font-size: 0.75rem;
     color: #94a3b8;
-    line-height: 1.75;
+  }
+  .project {
+    background-color: #262626;
+    color: #e2e8f0;
+    padding: 0rem;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    min-width: 255px;
+    /*height: 70px;*/
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    /*outline: 3px;
+    outline-color: #ffffff;
+    outline-width: 3px;*/
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .project::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    opacity: 0.7;
+  }
+  
+  .project-web::before {
+    background-color: #ff3e00; /* Svelte color */
+  }
+  
+  .project-python::before {
+    background-color: #3776AB; /* Python color */
+  }
+  
+  .project-unity::before {
+    background-color: #44A8B3; /* Unity-ish teal color */
+  }
+  
+  .project:hover {
+    transform: scale(1.00);
+    background-color: #3b3b3b;
   }
 
-  .projects-list strong {
+  .project:active {
+    transform: scale(0.9);
+  }
+  .projects-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .project-wrapper {
+    width: 100%;
+  }
+
+  .project-item {
+    background-color: #262626;
     color: #e2e8f0;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    min-width: 170px;
+    /*height: 50px;*/
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .project-icon {
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+  }
+
+  .project-name {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .project-description {
+    font-size: 0.75rem;
+    color: #94a3b8;
   }
 
   footer {
@@ -314,9 +530,18 @@
       display: none;
     }
 
+    .mobile-header {
+      display: flex;
+    }
+
+    .mobile-nav {
+      display: block;
+    }
+
     .container {
       margin-left: 0;
       padding: 4rem 1rem;
+      padding-top: 80px; /* Add extra padding for the mobile header */
     }
 
     h1 {
@@ -325,6 +550,22 @@
 
     .intro-text {
       font-size: 1rem;
+    }
+    
+    .tech-stack {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .projects-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tech-stack, .projects-list {
+      grid-template-columns: repeat(2,1fr);
+      gap: 0.75rem;
     }
   }
 
@@ -378,5 +619,155 @@
           opacity: 1;
           transform: translateY(0);
       }
+  }
+
+  .project-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .project-description {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  .project-name {
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+  .button-svelte {
+    background-color: #41322e;
+  }
+  .button-html {
+    background-color: #412e2e;
+  }
+  .button-git {
+    background-color: #41322e;
+  }
+  .button-csharp {
+    background-color: #3c2e41;
+  }
+  .button-css {
+    background-color: #2e3c41;
+  }
+  .button-python {
+    background-color: #35412e;
+  }
+  .button-js {
+    background-color: #41402e;
+  }
+  .button-swift {
+    background-color: #3d3533;
+  }
+
+  .mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #171717;
+    border-bottom: 1px solid #262626;
+    padding: 0 1rem;
+    z-index: 100;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .menu-toggle {
+    background: none;
+    border: none;
+    color: #e2e8f0;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+  .menu-toggle:hover {
+    background-color: #262626;
+  }
+
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #171717;
+    border-bottom: 1px solid #262626;
+    z-index: 99;
+    padding: 1rem;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-nav-open {
+    transform: translateY(0);
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .project-item {
+    background-color: #262626;
+    color: #e2e8f0;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    min-width: 170px;
+    height: 50px;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+  }
+
+  .project-item:hover {
+    transform: scale(1.00);
+    background-color: #3b3b3b;
+  }
+
+  .project-item:active {
+    transform: scale(0.9);
+  }
+
+  .project-icon {
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+  }
+
+  .project-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .project-name {
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+
+  .project-description {
+    font-size: 0.75rem;
+    color: #94a3b8;
   }
 </style>
